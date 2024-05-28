@@ -1,3 +1,3 @@
-const BASE_URL = 'https://hypehop.co.kr';
+const BASE_URL = 'https://server.hypehop.co.kr';
 
 export default BASE_URL;
