@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Box,
-  CardActions,
-  Avatar,
-  CircularProgress,
-} from '@mui/material';
+import { Button, Card, CardContent, Typography, Box, CardActions, Avatar, CircularProgress } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import he from 'he';
-import { ReactComponent as CommentIcon } from '../assets/icons/comment.svg';
-import TimeSincePost from '../components/album/TimeSincePost';
-import Favorite from '../components/common/Favorite';
 import BASE_URL from '../config';
 import { Review } from '../types/review';
-import { typography } from '../constants/themeValue';
-import CustomStar from '../components/review/CustomStar';
 import ReviewsPageSkeleton from '../components/common/skeletons/reviewsPage/ReviewsPageSkeleton';
+import AlbumCover from '../components/album/AlbumCover';
+import { typography } from '../constants/themeValue';
+import TimeSincePost from '../components/album/TimeSincePost';
+import Favorite from '../components/common/Favorite';
+import CustomStar from '../components/review/CustomStar';
+import { ReactComponent as CommentIcon } from '../assets/icons/comment.svg';
 
 interface InitialData {
   totalPage: number;
@@ -179,21 +170,21 @@ function ReviewsPage() {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-
-                height: '423px',
                 padding: '16px',
-                bgcolor: 'background.default',
-                border: '1px solid',
-                borderColor: 'rgb(52,52,52)',
+                border: '1px solid rgb(52, 52, 52)',
                 borderRadius: '0px 16px 16px 16px',
                 width: '100%',
                 margin: '0 auto',
                 maxWidth: '100%',
               }}
             >
-              <Link target="_blank" to={`/album/review/${review._id}`}>
-                <CardMedia component="img" width="234px" height="234px" image={review.thumbnail} alt="album cover" />
-              </Link>
+              <AlbumCover
+                reviewId={review._id}
+                url={review.thumbnail}
+                albumTitle={review.albumTitle}
+                artists={review.artists}
+                previewUrl={review?.previewUrl}
+              />
 
               <CardContent sx={{ padding: '0' }}>
                 <Box
@@ -226,9 +217,6 @@ function ReviewsPage() {
                           whiteSpace: 'nowrap',
                         }}
                       >
-                        {/* <Link to={`/user/${review.user._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                          {review.user.name || review.user.displayName}
-                      </Link> */}
                         <Typography>{review.user.name || review.user.displayName}</Typography>
                       </Typography>
 
@@ -292,7 +280,7 @@ function ReviewsPage() {
                     display: 'flex',
                   }}
                 >
-                  <Favorite reviewId={review?._id} favoriteClickedUsers={review?.isFavorite} />
+                  <Favorite reviewId={review._id} favoriteClickedUsers={review?.isFavorite} />
                   <Link
                     to={`/album/review/${review._id}`}
                     style={{ display: 'inline-flex', textDecoration: 'none', color: 'inherit' }}
